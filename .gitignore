@@ -1,0 +1,7 @@
+*.iso
+*.img
+*.vdi
+*.vmdk
+.DS_Store
+Thumbs.db
+*.log
