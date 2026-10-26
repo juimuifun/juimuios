@@ -1,0 +1,65 @@
+/* Control Center Component Styling */
+.control-center-panel {
+  position: fixed;
+  top: 54px;
+  right: 24px;
+  width: 320px;
+  background: var(--bg-glass-elevated);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--border-glass-hover);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 90;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.control-center-panel.active {
+  display: flex;
+}
+
+.control-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.control-tile {
+  background: var(--bg-glass-subtle);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.control-tile.active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: var(--accent-cyan);
+}
+
+.control-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.range-slider {
+  width: 100%;
+  accent-color: var(--accent-cyan);
+  cursor: pointer;
+}

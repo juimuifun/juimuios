@@ -1,0 +1,6 @@
+{
+  "name": "juimuios",
+  "version": "1.0.0",
+  "channel": "stable",
+  "releaseNotes": "JuimuiOS Initial Modern Shell with OTA Auto-Updater & Modular Architecture."
+}

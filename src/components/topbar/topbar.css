@@ -1,0 +1,79 @@
+/* TopBar Component Styling */
+.topbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: rgba(3, 7, 18, 0.45);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border-glass);
+  position: relative;
+  z-index: 50;
+}
+
+.topbar-brand {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue), var(--accent-pink));
+  -webkit-background-clip: text;
+  -webkit-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.topbar-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.update-indicator-pill {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: var(--accent-cyan);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  animation: pulseGlow 2s infinite ease-in-out;
+  transition: all 0.2s;
+}
+
+.update-indicator-pill:hover {
+  background: rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.topbar-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.topbar-btn:hover {
+  background: var(--bg-glass-subtle);
+  color: var(--text-main);
+}

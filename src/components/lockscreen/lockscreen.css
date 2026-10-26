@@ -1,0 +1,111 @@
+/* LockScreen Component Styling */
+.lockscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 20px 48px;
+  backdrop-filter: blur(40px);
+  background: rgba(3, 7, 18, 0.72);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lockscreen-overlay.unlocked {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-40px) scale(1.04);
+}
+
+.lock-time-display {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.lock-clock {
+  font-size: 78px;
+  font-weight: 200;
+  letter-spacing: 4px;
+  color: #ffffff;
+  text-shadow: 0 0 35px rgba(56, 189, 248, 0.35);
+  line-height: 1;
+}
+
+.lock-date {
+  font-size: 17px;
+  color: var(--accent-cyan);
+  margin-top: 10px;
+}
+
+.lock-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  padding: 32px 38px;
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  max-width: 360px;
+  width: 90%;
+}
+
+.user-badge-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
+}
+
+.user-name-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.lock-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 12px 18px;
+  color: #fff;
+  font-size: 15px;
+  text-align: center;
+  outline: none;
+  transition: all 0.25s;
+}
+
+.lock-input:focus {
+  border-color: var(--accent-cyan);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-glow);
+}
+
+.lock-submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lock-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}

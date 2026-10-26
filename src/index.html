@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JuimuiOS</title>
+
+  <!-- Global Base Styles -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/animations.css">
+
+  <!-- Modular Component Stylesheets -->
+  <link rel="stylesheet" href="components/topbar/topbar.css">
+  <link rel="stylesheet" href="components/dock/dock.css">
+  <link rel="stylesheet" href="components/launcher/launcher.css">
+  <link rel="stylesheet" href="components/control-center/control-center.css">
+  <link rel="stylesheet" href="components/updater/updater.css">
+  <link rel="stylesheet" href="components/lockscreen/lockscreen.css">
+
+  <style>
+    /* Desktop Workspace */
+    .desktop-workspace {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 10;
+    }
+
+    .desktop-center-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .desktop-hero-card {
+      text-align: center;
+      padding: 44px 50px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(28px);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-glass);
+      box-shadow: var(--shadow-lg);
+      max-width: 620px;
+      width: 90%;
+    }
+
+    .hero-clock {
+      font-size: 68px;
+      font-weight: 200;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
+    }
+
+    .hero-date {
+      color: var(--accent-cyan);
+      font-size: 16px;
+      margin-top: 4px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 24px 0 8px;
+    }
+
+    .hero-sub {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-left"></div>
+  <div class="ambient-glow glow-right"></div>
+
+  <!-- 1. LOCK SCREEN OVERLAY -->
+  <section class="lockscreen-overlay" id="lockscreen-overlay">
+    <div class="lock-time-display">
+      <h1 class="lock-clock" id="lock-clock-text">00:00</h1>
+      <p class="lock-date" id="lock-date-text">Loading...</p>
+    </div>
+
+    <div class="lock-card">
+      <div class="user-badge-avatar">👤</div>
+      <div class="user-name-title">Juimui</div>
+      <input type="password" id="lock-pass-input" class="lock-input" placeholder="Password or PIN" autofocus />
+      <button class="lock-submit-btn" id="lock-submit-btn">Unlock System</button>
+    </div>
+
+    <div style="color: var(--text-dim); font-size: 13px;">✦ JuimuiOS Ubuntu Core Protected</div>
+  </section>
+
+  <!-- 2. DESKTOP WORKSPACE -->
+  <div class="desktop-workspace">
+    <!-- TopBar Component -->
+    <header class="topbar-container">
+      <div class="topbar-brand" onclick="Launcher.toggle()">
+        <span>✦</span> JUIMUI OS
+      </div>
+
+      <div class="topbar-center">
+        <div class="update-indicator-pill" id="topbar-update-pill" onclick="Updater.openDialog()">
+          <span>⚡</span>
+          <span class="pill-text">Update Available</span>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="topbar-btn" id="topbar-control-btn">
+          <span>⚙️</span> Control
+        </button>
+        <span class="topbar-clock" id="topbar-clock">00:00</span>
+      </div>
+    </header>
+
+    <!-- Center Hero Screen -->
+    <main class="desktop-center-stage">
+      <div class="desktop-hero-card anim-scale-up">
+        <h1 class="hero-clock" id="hero-clock-text">00:00</h1>
+        <p class="hero-date" id="hero-date-text">Welcome</p>
+        <h2 class="hero-title">JuimuiOS Workspace</h2>
+        <p class="hero-sub">Modular Architecture • Ubuntu 26.04 Base • Live OTA Sync</p>
+      </div>
+    </main>
+
+    <!-- Dock Component -->
+    <footer class="dock-container">
+      <nav class="dock">
+        <div class="dock-item" data-action="launcher" title="App Launcher">
+          <span>🚀</span>
+        </div>
+        <div class="dock-item" data-action="browser" title="Brave / Web Browser">
+          <span>🌐</span>
+          <div class="dock-item-badge"></div>
+        </div>
+        <div class="dock-item" data-action="files" title="File Explorer">
+          <span>📁</span>
+          <div class="dock-item-badge"></div>
+        </div>
+        <div class="dock-item" data-action="terminal" title="Terminal Console">
+          <span>💻</span>
+          <div class="dock-item-badge"></div>
+        </div>
+        <div class="dock-item" data-action="update" title="System Updates">
+          <span>⚡</span>
+          <div class="dock-item-badge" id="dock-update-badge"></div>
+        </div>
+        <div class="dock-separator"></div>
+        <div class="dock-item" data-action="lock" title="Lock Screen (Ctrl+L)">
+          <span>🔒</span>
+        </div>
+        <div class="dock-item power" data-action="power" title="Power Options">
+          <span style="color: var(--danger);">⏻</span>
+        </div>
+      </nav>
+    </footer>
+  </div>
+
+  <!-- 3. APP LAUNCHER MODAL -->
+  <div class="launcher-overlay" id="launcher-overlay">
+    <input type="text" class="launcher-search-box" id="launcher-search" placeholder="Type to search apps..." />
+    <div class="launcher-grid">
+      <div class="launcher-app-item" data-app="browser">
+        <span class="launcher-app-icon">🌐</span>
+        <span class="launcher-app-name">Web Browser</span>
+      </div>
+      <div class="launcher-app-item" data-app="terminal">
+        <span class="launcher-app-icon">💻</span>
+        <span class="launcher-app-name">Terminal</span>
+      </div>
+      <div class="launcher-app-item" data-app="files">
+        <span class="launcher-app-icon">📁</span>
+        <span class="launcher-app-name">Files</span>
+      </div>
+      <div class="launcher-app-item" data-app="settings">
+        <span class="launcher-app-icon">⚙️</span>
+        <span class="launcher-app-name">Settings</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. CONTROL CENTER PANEL -->
+  <div class="control-center-panel" id="control-center-panel">
+    <div class="control-tile-grid">
+      <div class="control-tile active">
+        <span>📶</span> <span>Wi-Fi / LAN</span>
+      </div>
+      <div class="control-tile active">
+        <span>🔊</span> <span>Audio Out</span>
+      </div>
+    </div>
+    <div class="control-slider-group">
+      <div class="slider-label"><span>Volume</span><span>80%</span></div>
+      <input type="range" class="range-slider" min="0" max="100" value="80" />
+    </div>
+    <div class="control-slider-group">
+      <div class="slider-label"><span>Brightness</span><span>100%</span></div>
+      <input type="range" class="range-slider" min="10" max="100" value="100" />
+    </div>
+  </div>
+
+  <!-- 5. OTA UPDATER MODAL -->
+  <div class="updater-modal" id="updater-modal">
+    <div class="updater-card anim-scale-up">
+      <div class="updater-icon">⚡</div>
+      <h2 class="updater-title">System Update Available</h2>
+      <span class="updater-version-tag" id="new-version-text">v1.1.0</span>
+      <div class="updater-notes">
+        • Enhanced UI components isolation<br>
+        • Background GitHub auto-downloading enabled<br>
+        • Ubuntu native PAM authentication security
+      </div>
+      <div class="updater-progress-bar-container">
+        <div class="updater-progress-bar"></div>
+      </div>
+      <div class="updater-actions">
+        <button class="btn-update-primary" onclick="Updater.installNow()">Update & Restart Now</button>
+        <button class="btn-update-secondary" onclick="Updater.installOnReboot()">Update on Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts: Bridge & Modular Components -->
+  <script src="bridge/system.js"></script>
+  <script src="components/topbar/topbar.js"></script>
+  <script src="components/dock/dock.js"></script>
+  <script src="components/launcher/launcher.js"></script>
+  <script src="components/control-center/control-center.js"></script>
+  <script src="components/updater/updater.js"></script>
+  <script src="components/lockscreen/lockscreen.js"></script>
+
+  <script>
+    // Boot Coordinator
+    window.addEventListener('DOMContentLoaded', () => {
+      TopBar.init();
+      Dock.init();
+      Launcher.init();
+      ControlCenter.init();
+      Updater.init();
+      LockScreen.init();
+
+      // Main Clock
+      function updateHeroClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('hero-clock-text').textContent = `${h}:${m}`;
+        const opt = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+        document.getElementById('hero-date-text').textContent = now.toLocaleDateString('en-US', opt);
+      }
+      setInterval(updateHeroClock, 1000);
+      updateHeroClock();
+    });
+  </script>
+</body>
+</html>
