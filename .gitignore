@@ -1,7 +1,16 @@
+# ISO Images
+ubuntu-26.04.1-desktop-amd64.iso
 *.iso
 *.img
+
+# Virtual Disk Images
 *.vdi
 *.vmdk
+*.qcow2
+
+# OS & Editor generated files
 .DS_Store
 Thumbs.db
 *.log
+.vscode/
+.idea/
